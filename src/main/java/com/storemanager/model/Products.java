@@ -1,37 +1,19 @@
 package com.storemanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Products {
-    private Long idProduct;
-    private String nameProduct;
-    private String descriptionProduct;
-
-    public Products(Long idProduct, String nameProduct, String descriptionProduct) {
-        this.idProduct = idProduct;
-        this.nameProduct = nameProduct;
-        this.descriptionProduct = descriptionProduct;
-    }
-
-    public Long getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getDescriptionProduct() {
-        return descriptionProduct;
-    }
-
-    public void setDescriptionProduct(String descriptionProduct) {
-        this.descriptionProduct = descriptionProduct;
-    }
+    @Id
+    private Long idproducts;
+    private String name;
+    private String description;
 }

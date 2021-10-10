@@ -1,13 +1,20 @@
 package com.storemanager.service;
 
 import com.storemanager.model.Sale;
+import com.storemanager.repository.SaleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class SaleService {
-    public List<Sale> GetSale(){
-        return List.of(new Sale(1,2,10.4f,java.time.LocalDate.now()));
+    private final SaleRepository saleRepository;
+
+    public SaleService(SaleRepository saleRepository) {
+        this.saleRepository = saleRepository;
+    }
+
+    public List<Sale> getSale() {
+        return saleRepository.findAll();
     }
 }

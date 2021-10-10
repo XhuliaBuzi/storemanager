@@ -1,37 +1,19 @@
 package com.storemanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Inventory {
-    private long inInventory;
-    private int productQuantity;
-    private float productPrice;
-
-    public Inventory(long inInventory, int productQuantity, float productPrice) {
-        this.inInventory = inInventory;
-        this.productQuantity = productQuantity;
-        this.productPrice = productPrice;
-    }
-
-    public long getInInventory() {
-        return inInventory;
-    }
-
-    public void setInInventory(long inInventory) {
-        this.inInventory = inInventory;
-    }
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public float getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(float productPrice) {
-        this.productPrice = productPrice;
-    }
+    @Id
+    private Long inInventory;
+    private Integer product_quantity;
+    private Float price;
 }

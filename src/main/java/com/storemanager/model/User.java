@@ -1,27 +1,18 @@
 package com.storemanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
-    private String emailUser;
-    private String passwordUser;
-
-    public User(String email, String password) {
-        this.emailUser = email;
-        this.passwordUser = password;
-    }
-
-    public String getEmail() {
-        return emailUser;
-    }
-
-    public void setEmail(String email) {
-        this.emailUser = email;
-    }
-
-    public String getPassword() {
-        return passwordUser;
-    }
-
-    public void setPassword(String password) {
-        this.passwordUser = password;
-    }
+    @Id
+    private String email;
+    private String password;
 }
