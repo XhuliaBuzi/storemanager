@@ -19,6 +19,10 @@ public class StoreService {
         return storeRepository.findAll();
     }
 
+    public Optional<Store> GetOneUser(Long id) {
+        return storeRepository.findById(id);
+    }
+
     public void AddNewUser(Store store) {
         Optional<Store> userById = storeRepository.findById(store.getId());
         if (userById.isPresent()) throw new IllegalStateException("ID taken");
@@ -30,4 +34,6 @@ public class StoreService {
         if (!exists) throw new IllegalStateException("Store by ID : " + id + " does not exists.");
         storeRepository.deleteById(id);
     }
+
+
 }

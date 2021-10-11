@@ -5,6 +5,7 @@ import com.storemanager.repository.InventoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventoryService {
@@ -16,6 +17,10 @@ public class InventoryService {
 
     public List<Inventory> GetInventory() {
         return inventoryRepository.findAll();
+    }
+
+    public Optional<Inventory> GetOneInventory(Long id) {
+        return inventoryRepository.findById(id);
     }
 
     public void AddInventory(Inventory inventory) {

@@ -5,6 +5,7 @@ import com.storemanager.service.InventoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/inventory")
@@ -18,6 +19,11 @@ public class InventoryController {
     @GetMapping
     public List<Inventory> GetInventory() {
         return inventoryService.GetInventory();
+    }
+
+    @GetMapping(path = "/find/{id}")
+    public Optional<Inventory> GetOneInventory(@PathVariable("id") Long id) {
+        return inventoryService.GetOneInventory(id);
     }
 
     @PostMapping(path = "/add")

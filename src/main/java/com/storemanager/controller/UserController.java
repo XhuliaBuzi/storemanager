@@ -21,7 +21,7 @@ public class UserController {
         return userService.GetUsers();
     }
 
-    @GetMapping(path = "/one/{email}")
+    @GetMapping(path = "/find/{email}")
     public Optional<User> GetOneUser(@PathVariable("email") String email) {
         return userService.GetOneUser(email);
     }

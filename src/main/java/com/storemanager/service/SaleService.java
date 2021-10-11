@@ -19,6 +19,10 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
+    public Optional<Sale> GetOneUser(Long id) {
+        return saleRepository.findById(id);
+    }
+
     public void AddSale(Sale sale) {
         Optional<Sale> useID = saleRepository.findById(sale.getId());
         if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken.");
@@ -30,4 +34,6 @@ public class SaleService {
         if (!exists) throw new IllegalStateException("Sale by ID : " + id + " does not exists.");
         saleRepository.deleteById(id);
     }
+
+
 }

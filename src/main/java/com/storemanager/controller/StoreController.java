@@ -5,6 +5,7 @@ import com.storemanager.service.StoreService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/store")
@@ -18,6 +19,11 @@ public class StoreController {
     @GetMapping
     public List<Store> GetStore() {
         return storeService.GetService();
+    }
+
+    @GetMapping(path = "/find/{id}")
+    public Optional<Store> GetOneStore(@PathVariable("id") Long id) {
+        return storeService.GetOneUser(id);
     }
 
     @PostMapping(path = "/add")

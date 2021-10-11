@@ -5,6 +5,7 @@ import com.storemanager.service.SaleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/sale")
@@ -18,6 +19,11 @@ public class SaleController {
     @GetMapping
     public List<Sale> GetSale() {
         return saleService.GetSale();
+    }
+
+    @GetMapping(path = "/find/{id}")
+    public Optional<Sale> GetOneStore(@PathVariable("id") Long id) {
+        return saleService.GetOneUser(id);
     }
 
     @PostMapping

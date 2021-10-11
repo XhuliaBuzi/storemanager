@@ -19,6 +19,10 @@ public class ProductsService {
         return productsRepository.findAll();
     }
 
+    public Optional<Products> GetOneProduct(Long id) {
+        return productsRepository.findById(id);
+    }
+
     public void AddProduct(Products products) {
         Optional<Products> add = productsRepository.findById(products.getId());
         if (add.isPresent()) throw new IllegalStateException("Product it is on our list.");
@@ -30,4 +34,6 @@ public class ProductsService {
         if (!exists) throw new IllegalStateException("Products by ID : " + id + " does not exists.");
         productsRepository.deleteById(id);
     }
+
+
 }
