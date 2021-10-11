@@ -2,10 +2,7 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Sale;
 import com.storemanager.service.SaleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,12 +16,17 @@ public class SaleController {
     }
 
     @GetMapping
-    public List<Sale> getSale() {
-        return saleService.getSale();
+    public List<Sale> GetSale() {
+        return saleService.GetSale();
     }
 
-    @GetMapping
-    public void addSale(@RequestBody Sale sale) {
-        saleService.addSale(sale);
+    @PostMapping
+    public void AddSale(@RequestBody Sale sale) {
+        saleService.AddSale(sale);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public void DeleteSale(@PathVariable("id") Long id) {
+        saleService.DeleteSale(id);
     }
 }

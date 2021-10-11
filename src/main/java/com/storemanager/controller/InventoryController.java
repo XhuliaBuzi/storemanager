@@ -2,10 +2,7 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Inventory;
 import com.storemanager.service.InventoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,11 +16,17 @@ public class InventoryController {
     }
 
     @GetMapping
-    public List<Inventory> getInventory() {
-        return inventoryService.getInventory();
+    public List<Inventory> GetInventory() {
+        return inventoryService.GetInventory();
     }
-    @GetMapping (path = "/add")
-    public void addInventary(@RequestBody Inventory inventory){
-        inventoryService.addInventory(inventory);
+
+    @PostMapping(path = "/add")
+    public void AddInventory(@RequestBody Inventory inventory) {
+        inventoryService.AddInventory(inventory);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public void DeleteInventory(@PathVariable("id") Long id) {
+        inventoryService.DeleteInventory(id);
     }
 }

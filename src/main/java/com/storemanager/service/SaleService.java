@@ -15,13 +15,19 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
-    public List<Sale> getSale() {
+    public List<Sale> GetSale() {
         return saleRepository.findAll();
     }
 
-    public void addSale(Sale sale){
-        Optional<Sale> usebyID=saleRepository.findById(sale.getId());
-        if(usebyID.isPresent()) throw new IllegalStateException("Sale "+sale.getId()+" it is taken.");
+    public void AddSale(Sale sale) {
+        Optional<Sale> useID = saleRepository.findById(sale.getId());
+        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken.");
         saleRepository.save(sale);
+    }
+
+    public void DeleteSale(Long id) {
+        boolean exists = saleRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Sale by ID : " + id + " does not exists.");
+        saleRepository.deleteById(id);
     }
 }

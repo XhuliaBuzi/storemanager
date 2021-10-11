@@ -15,13 +15,19 @@ public class ProductsService {
         this.productsRepository = productsRepository;
     }
 
-    public List<Products> getProducts() {
+    public List<Products> GetProducts() {
         return productsRepository.findAll();
     }
 
-    public void addProduct(Products products) {
-        Optional<Products> addbyID = productsRepository.findById(products.getId());
-        if (addbyID.isPresent()) throw new IllegalStateException("Product it is on our list.");
+    public void AddProduct(Products products) {
+        Optional<Products> add = productsRepository.findById(products.getId());
+        if (add.isPresent()) throw new IllegalStateException("Product it is on our list.");
         productsRepository.save(products);
+    }
+
+    public void DeleteProducts(Long id) {
+        boolean exists = productsRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Products by ID : " + id + " does not exists.");
+        productsRepository.deleteById(id);
     }
 }

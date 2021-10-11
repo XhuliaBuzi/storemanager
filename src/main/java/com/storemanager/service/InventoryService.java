@@ -14,11 +14,17 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public List<Inventory> getInventory() {
+    public List<Inventory> GetInventory() {
         return inventoryRepository.findAll();
     }
 
-    public void addInventory(Inventory inventory) {
+    public void AddInventory(Inventory inventory) {
         inventoryRepository.save(inventory);
+    }
+
+    public void DeleteInventory(Long id) {
+        boolean exists = inventoryRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Inventory with ID : " + id + " does not exists");
+        inventoryRepository.deleteById(id);
     }
 }

@@ -16,12 +16,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public List<User> GetUsers() {
+        return userService.GetUsers();
     }
 
     @PostMapping(path = "/add")
-    public void registerNewUser(@RequestBody User user) {
-        userService.addNewUser(user);
+    public void RegisterNewUser(@RequestBody User user) {
+        userService.AddNewUser(user);
+    }
+
+    @DeleteMapping(path = "/delete/{email}")
+    public void DeleteUser(@PathVariable("email") String email) {
+        userService.DeleteUser(email);
     }
 }

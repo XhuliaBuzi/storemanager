@@ -15,13 +15,19 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getUsers() {
+    public List<User> GetUsers() {
         return userRepository.findAll();
     }
 
-    public void addNewUser(User user) {
+    public void AddNewUser(User user) {
         Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
         if (userByEmail.isPresent()) throw new IllegalStateException("Email taken");
         userRepository.save(user);
+    }
+
+    public void DeleteUser(String email) {
+        boolean exists = userRepository.existsById(email);
+        if (!exists) throw new IllegalStateException("User with Email : " + email + " does not exists.");
+        userRepository.deleteById(email);
     }
 }

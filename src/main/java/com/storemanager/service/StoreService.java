@@ -15,13 +15,19 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public List<Store> getService() {
+    public List<Store> GetService() {
         return storeRepository.findAll();
     }
 
-    public void addNewUser(Store store) {
+    public void AddNewUser(Store store) {
         Optional<Store> userById = storeRepository.findById(store.getId());
         if (userById.isPresent()) throw new IllegalStateException("ID taken");
         storeRepository.save(store);
+    }
+
+    public void DeleteStore(Long id) {
+        boolean exists = storeRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Store by ID : " + id + " does not exists.");
+        storeRepository.deleteById(id);
     }
 }
