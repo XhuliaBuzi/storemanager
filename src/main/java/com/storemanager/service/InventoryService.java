@@ -17,4 +17,8 @@ public class InventoryService {
     public List<Inventory> getInventory() {
         return inventoryRepository.findAll();
     }
+
+    public void addInventory(Inventory inventory) {
+        inventoryRepository.save(inventory);
+    }
 }

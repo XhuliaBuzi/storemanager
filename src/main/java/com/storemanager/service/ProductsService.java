@@ -5,6 +5,7 @@ import com.storemanager.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductsService {
@@ -16,5 +17,11 @@ public class ProductsService {
 
     public List<Products> getProducts() {
         return productsRepository.findAll();
+    }
+
+    public void addProduct(Products products) {
+        Optional<Products> addbyID = productsRepository.findById(products.getId());
+        if (addbyID.isPresent()) throw new IllegalStateException("Product it is on our list.");
+        productsRepository.save(products);
     }
 }

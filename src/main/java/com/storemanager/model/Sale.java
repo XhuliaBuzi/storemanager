@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Sale {
     @Id
-    private Long id_sale;
+    private Long id;
     private Integer quantity;
     private Float total;
     private LocalDate data;

@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Products {
     @Id
-    private Long idproducts;
+    private Long id;
     private String name;
     private String description;
 }

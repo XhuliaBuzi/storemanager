@@ -3,6 +3,7 @@ package com.storemanager.controller;
 import com.storemanager.model.Products;
 import com.storemanager.service.ProductsService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,10 @@ public class ProductsController {
     @GetMapping
     public List<Products> getProducts() {
         return productsService.getProducts();
+    }
+
+    @GetMapping(path = "/add")
+    public void addProducts(@RequestBody Products product) {
+        productsService.addProduct(product);
     }
 }

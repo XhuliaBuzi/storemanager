@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Inventory {
     @Id
-    private Long inInventory;
-    private Integer product_quantity;
+    private Long id;
+    private Integer quantity;
     private Float price;
 }
