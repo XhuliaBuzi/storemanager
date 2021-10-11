@@ -21,12 +21,14 @@ public class InventoryController {
     }
 
     @PostMapping(path = "/add")
-    public void AddInventory(@RequestBody Inventory inventory) {
+    public List<Inventory> AddInventory(@RequestBody Inventory inventory) {
         inventoryService.AddInventory(inventory);
+        return GetInventory();
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void DeleteInventory(@PathVariable("id") Long id) {
+    public List<Inventory> DeleteInventory(@PathVariable("id") Long id) {
         inventoryService.DeleteInventory(id);
+        return GetInventory();
     }
 }

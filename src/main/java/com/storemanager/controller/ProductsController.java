@@ -21,12 +21,14 @@ public class ProductsController {
     }
 
     @PostMapping(path = "/add")
-    public void AddProducts(@RequestBody Products product) {
+    public List<Products> AddProducts(@RequestBody Products product) {
         productsService.AddProduct(product);
+        return GetProducts();
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void DeleteProduct(@PathVariable("id") Long id) {
+    public List<Products> DeleteProduct(@PathVariable("id") Long id) {
         productsService.DeleteProducts(id);
+        return GetProducts();
     }
 }

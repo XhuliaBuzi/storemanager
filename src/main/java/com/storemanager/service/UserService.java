@@ -19,6 +19,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> GetOneUser(String email) {
+        return userRepository.findById(email);
+    }
+
     public void AddNewUser(User user) {
         Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
         if (userByEmail.isPresent()) throw new IllegalStateException("Email taken");

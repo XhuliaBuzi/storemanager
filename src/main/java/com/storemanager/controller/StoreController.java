@@ -21,12 +21,14 @@ public class StoreController {
     }
 
     @PostMapping(path = "/add")
-    public void RegisterNewUser(@RequestBody Store store) {
+    public List<Store> RegisterNewUser(@RequestBody Store store) {
         storeService.AddNewUser(store);
+        return GetStore();
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void DeleteStore(@PathVariable("id") Long id) {
+    public List<Store> DeleteStore(@PathVariable("id") Long id) {
         storeService.DeleteStore(id);
+        return GetStore();
     }
 }

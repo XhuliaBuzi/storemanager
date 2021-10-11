@@ -21,12 +21,14 @@ public class SaleController {
     }
 
     @PostMapping
-    public void AddSale(@RequestBody Sale sale) {
+    public List<Sale> AddSale(@RequestBody Sale sale) {
         saleService.AddSale(sale);
+        return GetSale();
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public void DeleteSale(@PathVariable("id") Long id) {
+    public List<Sale> DeleteSale(@PathVariable("id") Long id) {
         saleService.DeleteSale(id);
+        return GetSale();
     }
 }

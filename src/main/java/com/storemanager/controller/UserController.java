@@ -5,6 +5,7 @@ import com.storemanager.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -20,13 +21,20 @@ public class UserController {
         return userService.GetUsers();
     }
 
+    @GetMapping(path = "/one/{email}")
+    public Optional<User> GetOneUser(@PathVariable("email") String email) {
+        return userService.GetOneUser(email);
+    }
+
     @PostMapping(path = "/add")
-    public void RegisterNewUser(@RequestBody User user) {
+    public List<User> RegisterNewUser(@RequestBody User user) {
         userService.AddNewUser(user);
+        return GetUsers();
     }
 
     @DeleteMapping(path = "/delete/{email}")
-    public void DeleteUser(@PathVariable("email") String email) {
+    public List<User> DeleteUser(@PathVariable("email") String email) {
         userService.DeleteUser(email);
+        return GetUsers();
     }
 }
