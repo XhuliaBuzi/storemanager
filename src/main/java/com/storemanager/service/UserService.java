@@ -20,6 +20,7 @@ public class UserService {
     }
 
     public Optional<User> GetOneUser(String email) {
+        Exists(email);
         return userRepository.findById(email);
     }
 
@@ -30,8 +31,12 @@ public class UserService {
     }
 
     public void DeleteUser(String email) {
-        boolean exists = userRepository.existsById(email);
-        if (!exists) throw new IllegalStateException("User with Email : " + email + " does not exists.");
+        Exists(email);
         userRepository.deleteById(email);
+    }
+
+    private void Exists(String email) {
+        boolean exists = userRepository.existsById(email);
+        if (!exists) throw new IllegalStateException("User by Email : " + email + " does not exists.");
     }
 }

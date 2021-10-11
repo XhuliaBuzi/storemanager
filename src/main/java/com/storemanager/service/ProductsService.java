@@ -20,6 +20,7 @@ public class ProductsService {
     }
 
     public Optional<Products> GetOneProduct(Long id) {
+        Exists(id);
         return productsRepository.findById(id);
     }
 
@@ -30,10 +31,13 @@ public class ProductsService {
     }
 
     public void DeleteProducts(Long id) {
-        boolean exists = productsRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("Products by ID : " + id + " does not exists.");
+        Exists(id);
         productsRepository.deleteById(id);
     }
 
+    private void Exists(Long id) {
+        boolean exists = productsRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Products by ID : " + id + " does not exists.");
+    }
 
 }

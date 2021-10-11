@@ -20,6 +20,7 @@ public class SaleService {
     }
 
     public Optional<Sale> GetOneUser(Long id) {
+        Exists(id);
         return saleRepository.findById(id);
     }
 
@@ -30,10 +31,13 @@ public class SaleService {
     }
 
     public void DeleteSale(Long id) {
-        boolean exists = saleRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("Sale by ID : " + id + " does not exists.");
+        Exists(id);
         saleRepository.deleteById(id);
     }
 
+    private void Exists(Long id) {
+        boolean exists = saleRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Sale by ID : " + id + " does not exists.");
+    }
 
 }

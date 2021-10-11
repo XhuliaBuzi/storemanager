@@ -20,6 +20,7 @@ public class InventoryService {
     }
 
     public Optional<Inventory> GetOneInventory(Long id) {
+        Exists(id);
         return inventoryRepository.findById(id);
     }
 
@@ -28,8 +29,12 @@ public class InventoryService {
     }
 
     public void DeleteInventory(Long id) {
-        boolean exists = inventoryRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("Inventory with ID : " + id + " does not exists");
+        Exists(id);
         inventoryRepository.deleteById(id);
+    }
+
+    private void Exists(Long id) {
+        boolean exists = inventoryRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
     }
 }
