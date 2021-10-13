@@ -17,24 +17,22 @@ public class SaleController {
     }
 
     @GetMapping
-    public List<Sale> GetSale() {
-        return saleService.GetSale();
+    public List<Sale> getSale() {
+        return saleService.getSale();
     }
 
     @GetMapping(path = "/find/{id}")
-    public Optional<Sale> GetOneStore(@PathVariable("id") Long id) {
-        return saleService.GetOneUser(id);
+    public Optional<Sale> getOneStore(@PathVariable("id") Long id) {
+        return saleService.getOneUser(id);
     }
 
     @PostMapping
-    public List<Sale> AddSale(@RequestBody Sale sale) {
-        saleService.AddSale(sale);
-        return GetSale();
+    public Sale addSale(@RequestBody Sale sale) {
+        return saleService.addSale(sale);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public List<Sale> DeleteSale(@PathVariable("id") Long id) {
-        saleService.DeleteSale(id);
-        return GetSale();
+    public void deleteSale(@PathVariable("id") Long id) {
+        saleService.deleteSale(id);
     }
 }

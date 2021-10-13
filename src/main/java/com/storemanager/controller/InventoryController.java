@@ -17,24 +17,22 @@ public class InventoryController {
     }
 
     @GetMapping
-    public List<Inventory> GetInventory() {
-        return inventoryService.GetInventory();
+    public List<Inventory> getInventory() {
+        return inventoryService.getInventory();
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Optional<Inventory> GetOneInventory(@PathVariable("id") Long id) {
-        return inventoryService.GetOneInventory(id);
+    @GetMapping(path = "/{id}")
+    public Optional<Inventory> getOneInventory(@PathVariable("id") Long id) {
+        return inventoryService.getOneInventory(id);
     }
 
     @PostMapping(path = "/add")
-    public List<Inventory> AddInventory(@RequestBody Inventory inventory) {
-        inventoryService.AddInventory(inventory);
-        return GetInventory();
+    public Inventory addInventory(@RequestBody Inventory inventory) {
+        return inventoryService.addInventory(inventory);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public List<Inventory> DeleteInventory(@PathVariable("id") Long id) {
-        inventoryService.DeleteInventory(id);
-        return GetInventory();
+    @DeleteMapping(path = "/{id}")
+    public void deleteInventory(@PathVariable("id") Long id) {
+        inventoryService.deleteInventory(id);
     }
 }

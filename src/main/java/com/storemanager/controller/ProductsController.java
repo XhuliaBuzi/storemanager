@@ -17,24 +17,22 @@ public class ProductsController {
     }
 
     @GetMapping
-    public List<Products> GetProducts() {
-        return productsService.GetProducts();
+    public List<Products> getProducts() {
+        return productsService.getProducts();
     }
 
     @GetMapping(path = "/find/{id}")
-    public Optional<Products> GetOneProduct(@PathVariable("id") Long id) {
-        return productsService.GetOneProduct(id);
+    public Optional<Products> getOneProduct(@PathVariable("id") Long id) {
+        return productsService.getOneProduct(id);
     }
 
     @PostMapping(path = "/add")
-    public List<Products> AddProducts(@RequestBody Products product) {
-        productsService.AddProduct(product);
-        return GetProducts();
+    public Products addProducts(@RequestBody Products product) {
+        return productsService.addProduct(product);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public List<Products> DeleteProduct(@PathVariable("id") Long id) {
-        productsService.DeleteProducts(id);
-        return GetProducts();
+    public void deleteProduct(@PathVariable("id") Long id) {
+        productsService.deleteProducts(id);
     }
 }

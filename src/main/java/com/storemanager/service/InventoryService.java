@@ -15,26 +15,26 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public List<Inventory> GetInventory() {
+    public List<Inventory> getInventory() {
         return inventoryRepository.findAll();
     }
 
-    public Optional<Inventory> GetOneInventory(Long id) {
-        Exists(id);
+    public Optional<Inventory> getOneInventory(Long id) {
+        exists(id);
         return inventoryRepository.findById(id);
     }
 
-    public void AddInventory(Inventory inventory) {
-        inventoryRepository.save(inventory);
+    public Inventory addInventory(Inventory inventory) {
+        return inventoryRepository.save(inventory);
     }
 
-    public void DeleteInventory(Long id) {
-        Exists(id);
+    public void deleteInventory(Long id) {
+        exists(id);
         inventoryRepository.deleteById(id);
     }
 
-    private void Exists(Long id) {
-        boolean exists = inventoryRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
+    private void exists(Long id) {
+        if (!inventoryRepository.existsById(id))
+            throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
     }
 }

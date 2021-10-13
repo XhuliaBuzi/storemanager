@@ -17,24 +17,22 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> GetUsers() {
-        return userService.GetUsers();
+    public List<User> getUsers() {
+        return userService.getUsers();
     }
 
-    @GetMapping(path = "/find/{email}")
-    public Optional<User> GetOneUser(@PathVariable("email") String email) {
-        return userService.GetOneUser(email);
+    @GetMapping(path = "/{email}")
+    public Optional<User> getOneUser(@PathVariable("email") String email) {
+        return userService.getOneUser(email);
     }
 
     @PostMapping(path = "/add")
-    public List<User> RegisterNewUser(@RequestBody User user) {
-        userService.AddNewUser(user);
-        return GetUsers();
+    public User registerNewUser(@RequestBody User user) {
+        return userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "/delete/{email}")
-    public List<User> DeleteUser(@PathVariable("email") String email) {
-        userService.DeleteUser(email);
-        return GetUsers();
+    @DeleteMapping(path = "/{email}")
+    public void deleteUser(@PathVariable("email") String email) {
+        userService.deleteUser(email);
     }
 }

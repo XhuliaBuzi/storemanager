@@ -15,29 +15,29 @@ public class ProductsService {
         this.productsRepository = productsRepository;
     }
 
-    public List<Products> GetProducts() {
+    public List<Products> getProducts() {
         return productsRepository.findAll();
     }
 
-    public Optional<Products> GetOneProduct(Long id) {
-        Exists(id);
+    public Optional<Products> getOneProduct(Long id) {
+        exists(id);
         return productsRepository.findById(id);
     }
 
-    public void AddProduct(Products products) {
+    public Products addProduct(Products products) {
         Optional<Products> add = productsRepository.findById(products.getId());
         if (add.isPresent()) throw new IllegalStateException("Product it is on our list.");
-        productsRepository.save(products);
+        return productsRepository.save(products);
     }
 
-    public void DeleteProducts(Long id) {
-        Exists(id);
+    public void deleteProducts(Long id) {
+        exists(id);
         productsRepository.deleteById(id);
     }
 
-    private void Exists(Long id) {
-        boolean exists = productsRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("Products by ID : " + id + " does not exists.");
+    private void exists(Long id) {
+        if (!productsRepository.existsById(id))
+            throw new IllegalStateException("Products by ID : " + id + " does not exists.");
     }
 
 }

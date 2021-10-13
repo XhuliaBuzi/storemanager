@@ -17,24 +17,22 @@ public class StoreController {
     }
 
     @GetMapping
-    public List<Store> GetStore() {
-        return storeService.GetService();
+    public List<Store> getStore() {
+        return storeService.getService();
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Optional<Store> GetOneStore(@PathVariable("id") Long id) {
-        return storeService.GetOneUser(id);
+    @GetMapping(path = "/{id}")
+    public Optional<Store> getOneStore(@PathVariable("id") Long id) {
+        return storeService.getOneUser(id);
     }
 
     @PostMapping(path = "/add")
-    public List<Store> RegisterNewUser(@RequestBody Store store) {
-        storeService.AddNewUser(store);
-        return GetStore();
+    public Store registerNewUser(@RequestBody Store store) {
+        return storeService.addNewUser(store);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public List<Store> DeleteStore(@PathVariable("id") Long id) {
-        storeService.DeleteStore(id);
-        return GetStore();
+    @DeleteMapping(path = "/{id}")
+    public void deleteStore(@PathVariable("id") Long id) {
+        storeService.deleteStore(id);
     }
 }
