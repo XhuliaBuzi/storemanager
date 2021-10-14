@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Inventory {
     @OneToMany(mappedBy = "inventory")
-    public List<Sale> sales;
+    public List<Sale> sale;
     @Id
     private Long id;
     private Integer quantity;

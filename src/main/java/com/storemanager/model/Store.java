@@ -16,8 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Store {
-    @OneToMany(mappedBy = "stores")
-    public List<Inventory> inventories;
+    @OneToMany(mappedBy = "store")
+    public List<Inventory> inventory;
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -28,7 +28,7 @@ public class Store {
     private String contact;
     @ManyToMany(mappedBy = "stores")
     @JsonIgnore
-    private List<User> users;
+    private List<User> user;
 
 }
 

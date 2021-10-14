@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Products {
     @OneToMany(mappedBy = "products")
-    public List<Inventory> inventories;
+    public List<Inventory> inventory;
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
