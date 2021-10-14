@@ -27,7 +27,7 @@ public class ProductsService {
 
     public Products addProduct(Products products) {
         Optional<Products> add = productsRepository.findByName(products.getName());
-        if (add.isPresent()) throw new IllegalStateException("Product it is on our list.");
+        if (add.isPresent()) throw new IllegalStateException("Product it is on our list. ");
         return productsRepository.save(products);
     }
 
