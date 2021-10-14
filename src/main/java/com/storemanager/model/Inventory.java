@@ -19,18 +19,9 @@ public class Inventory {
     private Integer quantity;
     private Float price;
     @ManyToOne
-    @JoinTable(
-            name = "inventory",
-            joinColumns = {@JoinColumn(name = "id_inventory")},
-            inverseJoinColumns = {@JoinColumn(name = "id_products")}
-    )
+    @JoinColumn(name = "id_products")
     private Products products;
     @ManyToOne
-    @JoinTable(
-            name = "inventory",
-            joinColumns = {@JoinColumn(name = "id_inventory")},
-            inverseJoinColumns = {@JoinColumn(name = "id_store")}
-
-    )
+    @JoinColumn(name = "id_store")
     private Store store;
 }
