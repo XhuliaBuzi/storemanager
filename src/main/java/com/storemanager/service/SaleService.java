@@ -26,7 +26,7 @@ public class SaleService {
 
     public Sale addSale(Sale sale) {
         Optional<Sale> useID = saleRepository.findById(sale.getId());
-        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken.");
+        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken. ");
         return saleRepository.save(sale);
     }
 
