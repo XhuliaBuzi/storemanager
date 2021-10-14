@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -13,9 +15,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sale {
+
     @Id
     private Long id;
     private Integer quantity;
     private Float total;
     private LocalDate data;
+
+    @ManyToOne
+    @JoinColumn(name = "id_inventory")
+    private Inventory inventory;
 }

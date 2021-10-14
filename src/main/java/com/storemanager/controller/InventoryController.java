@@ -26,7 +26,7 @@ public class InventoryController {
         return inventoryService.getOneInventory(id);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping
     public Inventory addInventory(@RequestBody Inventory inventory) {
         return inventoryService.addInventory(inventory);
     }

@@ -21,7 +21,7 @@ public class SaleController {
         return saleService.getSale();
     }
 
-    @GetMapping(path = "/find/{id}")
+    @GetMapping(path = "/{id}")
     public Optional<Sale> getOneStore(@PathVariable("id") Long id) {
         return saleService.getOneUser(id);
     }
@@ -31,7 +31,7 @@ public class SaleController {
         return saleService.addSale(sale);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public void deleteSale(@PathVariable("id") Long id) {
         saleService.deleteSale(id);
     }
