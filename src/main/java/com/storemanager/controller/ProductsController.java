@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/products")
@@ -21,18 +22,18 @@ public class ProductsController {
         return productsService.getProducts();
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Optional<Products> getOneProduct(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}")
+    public Optional<Products> getOneProduct(@PathVariable("id") UUID id) {
         return productsService.getOneProduct(id);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping
     public Products addProducts(@RequestBody Products product) {
         return productsService.addProduct(product);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void deleteProduct(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/{id}")
+    public void deleteProduct(@PathVariable("id") UUID id) {
         productsService.deleteProducts(id);
     }
 }

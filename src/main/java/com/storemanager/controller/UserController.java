@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -21,18 +22,18 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping(path = "/{email}")
-    public Optional<User> getOneUser(@PathVariable("email") String email) {
-        return userService.getOneUser(email);
+    @GetMapping(path = "/{id}")
+    public Optional<User> getOneUser(@PathVariable("id") UUID id) {
+        return userService.getOneUser(id);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping
     public User registerNewUser(@RequestBody User user) {
         return userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "/{email}")
-    public void deleteUser(@PathVariable("email") String email) {
-        userService.deleteUser(email);
+    @DeleteMapping(path = "/{id}")
+    public void deleteUser(@PathVariable("id") UUID id) {
+        userService.deleteUser(id);
     }
 }

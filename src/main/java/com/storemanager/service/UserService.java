@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -19,24 +20,24 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getOneUser(String email) {
-        exists(email);
-        return userRepository.findById(email);
+    public Optional<User> getOneUser(UUID id) {
+        exists(id);
+        return userRepository.findById(id);
     }
 
     public User addNewUser(User user) {
-        Optional<User> userByEmail = userRepository.findById(user.getEmail());
-        if (userByEmail.isPresent()) throw new IllegalStateException("Email taken");
+        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
+        if (userByEmail.isPresent()) throw new IllegalStateException("Email taken .");
         return userRepository.save(user);
     }
 
-    public void deleteUser(String email) {
-        exists(email);
-        userRepository.deleteById(email);
+    public void deleteUser(UUID id) {
+        exists(id);
+        userRepository.deleteById(id);
     }
 
-    private void exists(String email) {
-        boolean exists = userRepository.existsById(email);
-        if (!exists) throw new IllegalStateException("User by Email : " + email + " does not exists.");
+    private void exists(UUID id) {
+        boolean exists = userRepository.existsById(id);
+        if (!exists) throw new IllegalStateException("User by Email : " + id + " does not exists.");
     }
 }

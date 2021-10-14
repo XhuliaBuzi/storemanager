@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/store")
@@ -22,17 +23,17 @@ public class StoreController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Store> getOneStore(@PathVariable("id") Long id) {
+    public Optional<Store> getOneStore(@PathVariable("id") UUID id) {
         return storeService.getOneUser(id);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping
     public Store registerNewUser(@RequestBody Store store) {
         return storeService.addNewUser(store);
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteStore(@PathVariable("id") Long id) {
+    public void deleteStore(@PathVariable("id") UUID id) {
         storeService.deleteStore(id);
     }
 }

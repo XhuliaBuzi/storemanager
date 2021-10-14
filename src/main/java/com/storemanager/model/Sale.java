@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -18,4 +17,12 @@ public class Sale {
     private Integer quantity;
     private Float total;
     private LocalDate data;
+    @ManyToOne
+    @JoinTable(
+            name = "sale",
+            joinColumns = {@JoinColumn(name = "id_sale")},
+            inverseJoinColumns = {@JoinColumn(name = "id_inventory")}
+
+    )
+    private Inventory inventory;
 }
