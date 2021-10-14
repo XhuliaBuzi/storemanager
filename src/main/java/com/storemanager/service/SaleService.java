@@ -36,7 +36,7 @@ public class SaleService {
     }
 
     private void exists(Long id) {
-        if (!saleRepository.existsById(id)) throw new IllegalStateException("Sale by ID : " + id + " does not exists.");
+        if (!saleRepository.existsById(id)) throw new IllegalStateException("Sale by ID : " + id + " does not exists. ");
     }
 
 }
