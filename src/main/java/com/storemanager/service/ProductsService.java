@@ -38,7 +38,7 @@ public class ProductsService {
 
     private void exists(UUID id) {
         if (!productsRepository.existsById(id))
-            throw new IllegalStateException("Products by ID : " + id + " does not exists.");
+            throw new IllegalStateException("Products by ID : " + id + " does not exists. ");
     }
 
 }
