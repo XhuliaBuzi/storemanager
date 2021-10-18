@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/sale")
@@ -22,7 +23,7 @@ public class SaleController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Sale> getOneStore(@PathVariable("id") Long id) {
+    public Optional<Sale> getOneStore(@PathVariable("id") UUID id) {
         return saleService.getOneUser(id);
     }
 
@@ -32,7 +33,7 @@ public class SaleController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteSale(@PathVariable("id") Long id) {
+    public void deleteSale(@PathVariable("id") UUID id) {
         saleService.deleteSale(id);
     }
 }

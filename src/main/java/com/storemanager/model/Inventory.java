@@ -3,9 +3,12 @@ package com.storemanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -15,13 +18,16 @@ public class Inventory {
     @OneToMany(mappedBy = "inventory")
     public List<Sale> sale;
     @Id
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "uuid-char")
+    private UUID id;
     private Integer quantity;
     private Float price;
     @ManyToOne
-    @JoinColumn(name = "id_products")
+    @JoinColumn(name = "products_id")
     private Products products;
     @ManyToOne
-    @JoinColumn(name = "id_store")
+    @JoinColumn(name = "store_id")
     private Store store;
 }
