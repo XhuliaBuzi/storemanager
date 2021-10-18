@@ -3,26 +3,28 @@ package com.storemanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sale {
-
     @Id
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "uuid-char")
+    private UUID id;
     private Integer quantity;
     private Float total;
     private LocalDate data;
 
     @ManyToOne
-    @JoinColumn(name = "id_inventory")
+    @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 }

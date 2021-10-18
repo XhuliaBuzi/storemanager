@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SaleService {
@@ -19,7 +20,7 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
-    public Optional<Sale> getOneUser(Long id) {
+    public Optional<Sale> getOneUser(UUID id) {
         exists(id);
         return saleRepository.findById(id);
     }
@@ -30,12 +31,12 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
-    public void deleteSale(Long id) {
+    public void deleteSale(UUID id) {
         exists(id);
         saleRepository.deleteById(id);
     }
 
-    private void exists(Long id) {
+    private void exists(UUID id) {
         if (!saleRepository.existsById(id)) throw new IllegalStateException("Sale by ID : " + id + " does not exists. ");
     }
 

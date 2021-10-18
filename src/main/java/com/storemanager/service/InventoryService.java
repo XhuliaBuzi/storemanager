@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class InventoryService {
@@ -19,7 +20,7 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
-    public Optional<Inventory> getOneInventory(Long id) {
+    public Optional<Inventory> getOneInventory(UUID id) {
         exists(id);
         return inventoryRepository.findById(id);
     }
@@ -28,12 +29,12 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
-    public void deleteInventory(Long id) {
+    public void deleteInventory(UUID id) {
         exists(id);
         inventoryRepository.deleteById(id);
     }
 
-    private void exists(Long id) {
+    private void exists(UUID id) {
         if (!inventoryRepository.existsById(id))
             throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
     }
