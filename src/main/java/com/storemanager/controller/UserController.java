@@ -2,9 +2,9 @@ package com.storemanager.controller;
 
 import com.storemanager.model.User;
 import com.storemanager.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,8 +18,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public Page<User> getUsers(@RequestParam(required = false, value = "sort", defaultValue = "email") String sort) {
+        return userService.getUsers(sort);
     }
 
     @GetMapping(path = "/{id}")

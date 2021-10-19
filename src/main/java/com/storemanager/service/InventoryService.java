@@ -2,9 +2,11 @@ package com.storemanager.service;
 
 import com.storemanager.model.Inventory;
 import com.storemanager.repository.InventoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,8 +18,9 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public List<Inventory> getInventory() {
-        return inventoryRepository.findAll();
+    public Page<Inventory> getInventory() {
+        Pageable pageable = PageRequest.of(0, 2);
+        return inventoryRepository.findAll(pageable);
     }
 
     public Optional<Inventory> getOneInventory(UUID id) {
@@ -35,7 +38,7 @@ public class InventoryService {
     }
 
     private void exists(UUID id) {
-        if (!inventoryRepository.existsById(id))
-            throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
+        boolean b = inventoryRepository.existsById(id);
+        if (!b) throw new IllegalStateException("Inventory by ID : " + id + " does not exists");
     }
 }

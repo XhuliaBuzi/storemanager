@@ -2,9 +2,11 @@ package com.storemanager.service;
 
 import com.storemanager.model.Store;
 import com.storemanager.repository.StoreRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,8 +18,9 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public List<Store> getService() {
-        return storeRepository.findAll();
+    public Page<Store> getService() {
+        Pageable pageable = PageRequest.of(0, 2);
+        return storeRepository.findAll(pageable);
     }
 
     public Optional<Store> getOneUser(UUID id) {
@@ -37,8 +40,8 @@ public class StoreService {
     }
 
     private void exists(UUID id) {
-        if (!storeRepository.existsById(id))
-            throw new IllegalStateException("Store by ID : " + id + " does not exists.");
+        boolean existsById = storeRepository.existsById(id);
+        if (!existsById) throw new IllegalStateException("Store by ID : " + id + " does not exists.");
     }
 
 }

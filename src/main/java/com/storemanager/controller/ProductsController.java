@@ -2,9 +2,9 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Products;
 import com.storemanager.service.ProductsService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,8 +18,8 @@ public class ProductsController {
     }
 
     @GetMapping
-    public List<Products> getProducts() {
-        return productsService.getProducts();
+    public Page<Products> getProducts(@RequestParam(required = false, value = "sort", defaultValue = "name") String sort) {
+        return productsService.getProducts(sort);
     }
 
     @GetMapping(path = "/{id}")

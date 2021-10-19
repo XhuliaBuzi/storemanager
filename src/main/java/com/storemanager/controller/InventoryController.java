@@ -2,9 +2,9 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Inventory;
 import com.storemanager.service.InventoryService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class InventoryController {
     }
 
     @GetMapping
-    public List<Inventory> getInventory() {
+    public Page<Inventory> getInventory() {
         return inventoryService.getInventory();
     }
 

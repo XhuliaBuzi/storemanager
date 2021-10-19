@@ -2,6 +2,7 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Sale;
 import com.storemanager.service.SaleService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SaleController {
     }
 
     @GetMapping
-    public List<Sale> getSale() {
+    public Page<Sale> getSale() {
         return saleService.getSale();
     }
 

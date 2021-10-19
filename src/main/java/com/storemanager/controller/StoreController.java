@@ -2,9 +2,9 @@ package com.storemanager.controller;
 
 import com.storemanager.model.Store;
 import com.storemanager.service.StoreService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class StoreController {
     }
 
     @GetMapping
-    public List<Store> getStore() {
+    public Page<Store> getStore() {
         return storeService.getService();
     }
 
