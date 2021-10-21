@@ -2,9 +2,12 @@ package com.storemanager.service;
 
 import com.storemanager.model.User;
 import com.storemanager.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,8 +19,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public Page<User> getUsers(String sort) {
+        Pageable pageable= PageRequest.of(0,2,Sort.by(sort));
+        return userRepository.findAll(pageable);
     }
 
     public Optional<User> getOneUser(UUID id) {
@@ -27,7 +31,7 @@ public class UserService {
 
     public User addNewUser(User user) {
         Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
-        if (userByEmail.isPresent()) throw new IllegalStateException("Email taken .");
+        if (userByEmail.isPresent()) throw new IllegalStateException("Email taken.");
         return userRepository.save(user);
     }
 
