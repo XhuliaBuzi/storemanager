@@ -15,18 +15,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class ProductsServiceTest {
     private Products products;
     private ProductsService productsService;
+    private UUID uuid;
     @Mock
     ProductsRepository productsRepository;
 
     @BeforeEach
     public void inti() {
         productsService = new ProductsService(productsRepository);
-        products = new Products(null, UUID.randomUUID(), "", "");
+        products = new Products(UUID.randomUUID(), "", "",null);
+        uuid = UUID.randomUUID();
     }
     @Test
     void shouldGetProductsTest() {
@@ -39,7 +42,6 @@ class ProductsServiceTest {
 
     @Test
     void shouldGetOneProductTest() {
-        UUID uuid = UUID.randomUUID();
         Mockito.when(productsRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(productsRepository.findById(uuid)).thenReturn(Optional.of(products));
 
@@ -47,18 +49,31 @@ class ProductsServiceTest {
     }
 
     @Test
-    void shoulAdddProductFindTest() {
+    void shouldGetOneProductExceptionTest() {
+        Mockito.when(productsRepository.existsById(uuid)).thenReturn(false);
+
+        assertThrows(IllegalStateException.class,()->productsService.getOneProduct(uuid));
     }
 
     @Test
-    void shoulAdddProductTest() {
+    void shouldAddProductTest() {
         Mockito.when(productsRepository.save(products)).thenReturn(products);
 
         assertNotNull(productsService.addProduct(products));
     }
 
+    @Test
+    void shouldAddProductExceptionTest() {
+        Mockito.when(productsRepository.findByName("")).thenReturn(Optional.ofNullable(products));
+
+        assertThrows(IllegalStateException.class,()->productsService.addProduct(products));
+    }
 
     @Test
     void deleteProducts() {
+        Mockito.when(productsRepository.existsById(uuid)).thenReturn(true);
+
+        productsService.deleteProducts(uuid);
+        Mockito.verify(productsRepository,Mockito.atLeastOnce()).deleteById(uuid);
     }
 }

@@ -17,18 +17,21 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class InventoryServiceTest {
     private InventoryService inventoryService;
     private Inventory inventory;
+    private UUID uuid;
     @Mock
     InventoryRepository inventoryRepository;
 
     @BeforeEach
     public void inti() {
         inventoryService = new InventoryService(inventoryRepository);
-        inventory = new Inventory(null, UUID.randomUUID(), 0, 0f, null, null);
+        uuid = UUID.randomUUID();
+        inventory = new Inventory(UUID.randomUUID(), 0, 0f, null, null, null);
     }
 
     @Test
@@ -42,7 +45,6 @@ class InventoryServiceTest {
 
     @Test
     void shouldGetOneInventoryTest() {
-        UUID uuid=UUID.randomUUID();
         Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(inventoryRepository.findById(uuid)).thenReturn(java.util.Optional.ofNullable(inventory));
 
@@ -50,7 +52,10 @@ class InventoryServiceTest {
     }
 
     @Test
-    void shouldAddInventoryFindTest() {
+    void shouldGetOneInventoryExceptionTest() {
+        Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(false);
+
+        assertThrows(IllegalStateException.class,()-> inventoryService.getOneInventory(uuid));
     }
 
     @Test
@@ -62,5 +67,9 @@ class InventoryServiceTest {
 
     @Test
     void shouldDeleteInventoryTest() {
+        Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(true);
+
+        inventoryService.deleteInventory(uuid);
+        Mockito.verify(inventoryRepository,Mockito.atLeastOnce()).deleteById(uuid);
     }
 }

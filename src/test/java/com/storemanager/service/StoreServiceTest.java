@@ -17,17 +17,20 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class StoreServiceTest {
     private StoreService storeService;
     private Store store;
+    private UUID uuid;
     @Mock
     private StoreRepository storeRepository;
 
     @BeforeEach
     public void init() {
         storeService = new StoreService(storeRepository);
+        uuid = UUID.randomUUID();
         store = new Store(UUID.randomUUID(), "", "", "", null, null);
     }
 
@@ -43,7 +46,6 @@ class StoreServiceTest {
 
     @Test
     void shouldReturnOneUserTest() {
-        UUID uuid = UUID.randomUUID();
         Mockito.when(storeRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(storeRepository.findById(uuid)).thenReturn(java.util.Optional.of(store));
 
@@ -51,8 +53,10 @@ class StoreServiceTest {
     }
 
     @Test
-    void shouldaddNewUserTRUETest() {
+    void shouldReturnOneUserExceptionTest() {
+        Mockito.when(storeRepository.existsById(uuid)).thenReturn(false);
 
+        assertThrows(IllegalStateException.class, () -> storeService.getOneUser(uuid));
     }
 
     @Test
@@ -63,6 +67,17 @@ class StoreServiceTest {
     }
 
     @Test
+    void shouldAddNewUserExceptionTest() {
+        Mockito.when(storeRepository.findByName("")).thenReturn(java.util.Optional.ofNullable(store));
+
+        assertThrows(IllegalStateException.class, () -> storeService.addNewUser(store));
+    }
+
+    @Test
     void shouldDeleteStoreTest() {
+        Mockito.when(storeRepository.existsById(uuid)).thenReturn(true);
+
+        storeService.deleteStore(uuid);
+        Mockito.verify(storeRepository, Mockito.atLeastOnce()).deleteById(uuid);
     }
 }

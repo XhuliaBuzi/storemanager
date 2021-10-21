@@ -18,18 +18,21 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class SaleServiceTest {
     private SaleService saleService;
     private Sale sale;
+    private UUID uuid;
     @Mock
     private SaleRepository saleRepository;
 
     @BeforeEach
     public void inti() {
         saleService = new SaleService(saleRepository);
-        sale=new Sale(UUID.randomUUID(), 0, 0f, LocalDate.now(), null);
+        uuid = UUID.randomUUID();
+        sale = new Sale(UUID.randomUUID(), 0, 0f, LocalDate.now(), null);
     }
 
     @Test
@@ -43,7 +46,6 @@ class SaleServiceTest {
 
     @Test
     void shouldGetOneUserTest() {
-        UUID uuid = UUID.randomUUID();
         Mockito.when(saleRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(saleRepository.findById(uuid)).thenReturn(java.util.Optional.of(sale));
 
@@ -51,7 +53,10 @@ class SaleServiceTest {
     }
 
     @Test
-    void shouldAddSaleFindTest() {
+    void shouldGetOneUserExceptionTest() {
+        Mockito.when(saleRepository.existsById(uuid)).thenReturn(false);
+
+        assertThrows(IllegalStateException.class, () -> saleService.getOneUser(uuid));
     }
 
     @Test
@@ -62,6 +67,17 @@ class SaleServiceTest {
     }
 
     @Test
+    void shouldAddSaleExceptionTest() {
+//        Mockito.when(saleRepository.findById(uuid)).thenReturn(Optional.of(sale));
+//
+//        assertThrows(IllegalStateException.class, () -> saleService.addSale(sale));
+    }
+
+    @Test
     void deleteSale() {
+        Mockito.when(saleRepository.existsById(uuid)).thenReturn(true);
+
+        saleService.deleteSale(uuid);
+        Mockito.verify(saleRepository, Mockito.atLeastOnce()).deleteById(uuid);
     }
 }
