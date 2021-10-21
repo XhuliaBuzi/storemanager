@@ -35,42 +35,42 @@ class StoreServiceTest {
     }
 
     @Test
-    void shouldReturnServiceTest() {
+    void shouldReturnStoreTest() {
         Pageable pageable = PageRequest.of(0, 2);
         Page<Store> page = new PageImpl<>(Collections.singletonList(store), pageable, 1);
 
         Mockito.when(storeRepository.findAll(pageable)).thenReturn(page);
 
-        assertNotNull(storeService.getService());
+        assertNotNull(storeService.getStore());
     }
 
     @Test
-    void shouldReturnOneUserTest() {
+    void shouldReturnOneStoreTest() {
         Mockito.when(storeRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(storeRepository.findById(uuid)).thenReturn(java.util.Optional.of(store));
 
-        assertNotNull(storeService.getOneUser(uuid));
+        assertNotNull(storeService.getOneStore(uuid));
     }
 
     @Test
-    void shouldReturnOneUserExceptionTest() {
+    void shouldReturnOneStoreExceptionTest() {
         Mockito.when(storeRepository.existsById(uuid)).thenReturn(false);
 
-        assertThrows(IllegalStateException.class, () -> storeService.getOneUser(uuid));
+        assertThrows(IllegalStateException.class, () -> storeService.getOneStore(uuid));
     }
 
     @Test
-    void shouldAddNewUserTest() {
+    void shouldAddNewStoreTest() {
         Mockito.when(storeRepository.save(store)).thenReturn(store);
 
-        assertNotNull(storeService.addNewUser(store));
+        assertNotNull(storeService.addNewStore(store));
     }
 
     @Test
-    void shouldAddNewUserExceptionTest() {
+    void shouldAddNewStoreExceptionTest() {
         Mockito.when(storeRepository.findByName("")).thenReturn(java.util.Optional.ofNullable(store));
 
-        assertThrows(IllegalStateException.class, () -> storeService.addNewUser(store));
+        assertThrows(IllegalStateException.class, () -> storeService.addNewStore(store));
     }
 
     @Test

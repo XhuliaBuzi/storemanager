@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,18 +46,18 @@ class SaleServiceTest {
     }
 
     @Test
-    void shouldGetOneUserTest() {
+    void shouldGetOneSaleTest() {
         Mockito.when(saleRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(saleRepository.findById(uuid)).thenReturn(java.util.Optional.of(sale));
 
-        assertNotNull(saleService.getOneUser(uuid));
+        assertNotNull(saleService.getOneSale(uuid));
     }
 
     @Test
-    void shouldGetOneUserExceptionTest() {
+    void shouldGetOneSaleExceptionTest() {
         Mockito.when(saleRepository.existsById(uuid)).thenReturn(false);
 
-        assertThrows(IllegalStateException.class, () -> saleService.getOneUser(uuid));
+        assertThrows(IllegalStateException.class, () -> saleService.getOneSale(uuid));
     }
 
     @Test
@@ -68,9 +69,9 @@ class SaleServiceTest {
 
     @Test
     void shouldAddSaleExceptionTest() {
-//        Mockito.when(saleRepository.findById(uuid)).thenReturn(Optional.of(sale));
-//
-//        assertThrows(IllegalStateException.class, () -> saleService.addSale(sale));
+        Mockito.when(saleRepository.findById(sale.getId())).thenReturn(Optional.of(sale));
+
+        assertThrows(IllegalStateException.class, () -> saleService.addSale(sale));
     }
 
     @Test

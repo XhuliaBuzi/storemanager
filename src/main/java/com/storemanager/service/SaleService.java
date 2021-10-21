@@ -23,7 +23,7 @@ public class SaleService {
         return saleRepository.findAll(pageable);
     }
 
-    public Optional<Sale> getOneUser(UUID id) {
+    public Optional<Sale> getOneSale(UUID id) {
         exists(id);
         return saleRepository.findById(id);
     }

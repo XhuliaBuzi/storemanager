@@ -19,17 +19,17 @@ public class StoreController {
 
     @GetMapping
     public Page<Store> getStore() {
-        return storeService.getService();
+        return storeService.getStore();
     }
 
     @GetMapping(path = "/{id}")
     public Optional<Store> getOneStore(@PathVariable("id") UUID id) {
-        return storeService.getOneUser(id);
+        return storeService.getOneStore(id);
     }
 
     @PostMapping
-    public Store registerNewUser(@RequestBody Store store) {
-        return storeService.addNewUser(store);
+    public Store registerNewStore(@RequestBody Store store) {
+        return storeService.addNewStore(store);
     }
 
     @DeleteMapping(path = "/{id}")

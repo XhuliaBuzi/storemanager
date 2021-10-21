@@ -5,7 +5,6 @@ import com.storemanager.service.SaleService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,8 +23,8 @@ public class SaleController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Sale> getOneStore(@PathVariable("id") UUID id) {
-        return saleService.getOneUser(id);
+    public Optional<Sale> getOneSale(@PathVariable("id") UUID id) {
+        return saleService.getOneSale(id);
     }
 
     @PostMapping

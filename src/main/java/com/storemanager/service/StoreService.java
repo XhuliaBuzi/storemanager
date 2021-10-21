@@ -18,17 +18,17 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public Page<Store> getService() {
+    public Page<Store> getStore() {
         Pageable pageable = PageRequest.of(0, 2);
         return storeRepository.findAll(pageable);
     }
 
-    public Optional<Store> getOneUser(UUID id) {
+    public Optional<Store> getOneStore(UUID id) {
         exists(id);
         return storeRepository.findById(id);
     }
 
-    public Store addNewUser(Store store) {
+    public Store addNewStore(Store store) {
         Optional<Store> userById = storeRepository.findByName(store.getName());
         if (userById.isPresent()) throw new IllegalStateException("ID taken");
         return storeRepository.save(store);
