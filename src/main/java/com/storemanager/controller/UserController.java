@@ -32,6 +32,15 @@ public class UserController {
         return userService.addNewUser(user);
     }
 
+    @PatchMapping(path = "{userID}")
+    public void updateUser(
+            @PathVariable("userID") UUID userID,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String password) {
+        userService.updateUser(userID, email, password);
+    }
+
+
     @DeleteMapping(path = "/{id}")
     public void deleteUser(@PathVariable("id") UUID id) {
         userService.deleteUser(id);

@@ -39,7 +39,6 @@ class UserServiceTest {
 
         Pageable pageable = PageRequest.of(0, 2, Sort.by("email"));
         Page<User> page = new PageImpl<>(Collections.singletonList(user), pageable, 1);
-
         Mockito.when(userRepository.findAll(pageable)).thenReturn(page);
         assertNotNull(userService.getUsers("email"));
     }

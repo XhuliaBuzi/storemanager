@@ -3,13 +3,12 @@ package com.storemanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -24,8 +23,8 @@ public class Sale {
     private UUID id;
     private Integer quantity;
     private Float total;
-    private LocalDate data;
-
+    private LocalDate date=LocalDate.now();
+    private LocalTime time=LocalTime.now();
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;

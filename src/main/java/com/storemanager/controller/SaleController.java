@@ -5,6 +5,7 @@ import com.storemanager.service.SaleService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 

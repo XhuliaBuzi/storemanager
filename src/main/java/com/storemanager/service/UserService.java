@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,13 +22,12 @@ public class UserService {
     }
 
     public Page<User> getUsers(String sort) {
-        Pageable pageable= PageRequest.of(0,2,Sort.by(sort));
+        Pageable pageable = PageRequest.of(0, 2, Sort.by(sort));
         return userRepository.findAll(pageable);
     }
 
     public Optional<User> getOneUser(UUID id) {
-        exists(id);
-        return userRepository.findById(id);
+        return exists(id);
     }
 
     public User addNewUser(User user) {
@@ -36,12 +37,24 @@ public class UserService {
     }
 
     public void deleteUser(UUID id) {
-        exists(id);
-        userRepository.deleteById(id);
+        userRepository.delete(exists(id).get());
     }
 
-    private void exists(UUID id) {
-        boolean exists = userRepository.existsById(id);
-        if (!exists) throw new IllegalStateException("User by Email : " + id + " does not exists.");
+    @Transactional
+    public void updateUser(UUID userID, String email, String password) {
+        User user = exists(userID).get();
+        if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
+            user.setEmail(email);
+        }
+        if (password != null && password.length() > 0 && !Objects.equals(user.getEmail(), password)) {
+            user.setPassword(password);
+        }
     }
+
+    private Optional<User> exists(UUID id) {
+        Optional<User> userByID = userRepository.findById(id);
+        if (userByID.isEmpty()) throw new IllegalStateException("User by Email : " + id + " does not exists.");
+        return userByID;
+    }
+
 }

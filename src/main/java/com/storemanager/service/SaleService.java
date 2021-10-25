@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,8 +31,9 @@ public class SaleService {
     }
 
     public Sale addSale(Sale sale) {
-        Optional<Sale> useID = saleRepository.findById(sale.getId());
-        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken. ");
+//        Optional<Sale> useID = saleRepository.findById(sale.getId());
+//        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken. ");
+
         return saleRepository.save(sale);
     }
 

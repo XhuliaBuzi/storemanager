@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +34,7 @@ class SaleControllerTest {
     void setUp() {
         saleController = new SaleController(saleService);
         uuid = UUID.randomUUID();
-        sale = new Sale(UUID.randomUUID(), 0, 0f, LocalDate.now(), null);
+        sale = new Sale(UUID.randomUUID(), 0, 0f, LocalDate.now(), LocalTime.now(), null);
     }
 
     @Test
