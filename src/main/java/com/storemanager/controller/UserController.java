@@ -35,9 +35,8 @@ public class UserController {
     @PatchMapping(path = "{userID}")
     public void updateUser(
             @PathVariable("userID") UUID userID,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password) {
-        userService.updateUser(userID, email, password);
+            @RequestBody User user) {
+        userService.updateUser(userID, user);
     }
 
 

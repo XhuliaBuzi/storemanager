@@ -40,8 +40,13 @@ public class UserService {
         userRepository.delete(exists(id).get());
     }
 
+    // So first it wasn't working with http://localhost:8080/user/{{userId}} in postmen
+    // and what i did it was           http://localhost:8080/user/f1bc325c-0fe3-490c-b6a3-2aa15baac189 and it works.
+    //if you apruve my code than i will do this for the others.
     @Transactional
-    public void updateUser(UUID userID, String email, String password) {
+    public void updateUser(UUID userID, User userForUpdate) {
+        String email = userForUpdate.getEmail();
+        String password = userForUpdate.getPassword();
         User user = exists(userID).get();
         if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
             user.setEmail(email);
