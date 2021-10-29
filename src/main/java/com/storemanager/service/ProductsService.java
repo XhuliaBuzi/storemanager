@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,12 +26,11 @@ public class ProductsService {
     }
 
     public Optional<Products> getOneProduct(UUID id) {
-        exists(id);
-        return productsRepository.findById(id);
+        return exists(id);
     }
 
     public Products addProduct(Products products) {
-        Optional<Products> add = productsRepository.findByName(products.getName());
+        var add = productsRepository.findByName(products.getName());
         if (add.isPresent()) throw new IllegalStateException("Product it is on our list. ");
         return productsRepository.save(products);
     }
@@ -40,9 +40,24 @@ public class ProductsService {
         productsRepository.deleteById(id);
     }
 
-    private void exists(UUID id) {
-        boolean existsById = productsRepository.existsById(id);
-        if (!existsById)  throw new IllegalStateException("Products by ID : " + id + " does not exists. ");
+    public Products updateProducts(UUID idProduct, Products updateOneProducts) {
+        exists(idProduct);
+        var products = productsRepository.getById(idProduct);
+        final var forUpdateDescription = updateOneProducts.getDescription();
+        final var forUpdateName = updateOneProducts.getName();
+        if (arNotEqual(products.getName(),forUpdateName)) products.setName(forUpdateName);
+        if (arNotEqual(products.getDescription(), forUpdateDescription)) products.setDescription(forUpdateDescription);
+        return productsRepository.save(products);
+    }
+
+    private <T> boolean arNotEqual(T first, T second) {
+        return second != null && !Objects.equals(first, second);
+    }
+
+    private Optional<Products> exists(UUID id) {
+        var byId = productsRepository.findById(id);
+        if (byId.isEmpty()) throw new IllegalStateException("Products by ID : " + id + " does not exists. ");
+        return byId;
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,16 +25,10 @@ public class SaleService {
     }
 
     public Optional<Sale> getOneSale(UUID id) {
-        exists(id);
-        return saleRepository.findById(id);
+        return exists(id);
     }
 
-    //The last time that we talk you left me home work to try to se wat was the problem that the scale isn't working in the Postman.
-    //the problem it is with line 35,36 now it works but i need throws 2 i need your opinion on that. Should i delete thous or we will try to solve the problem?
     public Sale addSale(Sale sale) {
-//        Optional<Sale> useID = saleRepository.findById(sale.getId());
-//        if (useID.isPresent()) throw new IllegalStateException("Sale " + sale.getId() + " it is taken. ");
-
         return saleRepository.save(sale);
     }
 
@@ -42,9 +37,27 @@ public class SaleService {
         saleRepository.deleteById(id);
     }
 
-    private void exists(UUID id) {
-        boolean existsById = saleRepository.existsById(id);
-        if (!existsById) throw new IllegalStateException("Sale by ID : " + id + " does not exists. ");
+    public Sale updateSale(UUID idSale, Sale updateOneSale) {
+        exists(idSale);
+        var sale = saleRepository.getById(idSale);
+        final var forUpdateQuantity = updateOneSale.getQuantity();
+        final var forUpdateTotal = updateOneSale.getTotal();
+        final var forUpdateDate = updateOneSale.getDate();
+        final var forUpdateTime = updateOneSale.getTime();
+        if (areNotEqual(sale.getQuantity(), forUpdateQuantity)) sale.setQuantity(forUpdateQuantity);
+        if (areNotEqual(sale.getTotal(), forUpdateTotal)) sale.setTotal(forUpdateTotal);
+        if (areNotEqual(sale.getDate(), forUpdateDate)) sale.setDate(forUpdateDate);
+        if (areNotEqual(sale.getTime(), forUpdateTime)) sale.setTime(forUpdateTime);
+        return saleRepository.save(sale);
     }
 
+    private <T> boolean areNotEqual(T first, T second) {
+        return second != null && !Objects.equals(first, second);
+    }
+
+    private Optional<Sale> exists(UUID id) {
+        var byId = saleRepository.findById(id);
+        if (byId.isEmpty()) throw new IllegalStateException("Sale by ID : " + id + " does not exists. ");
+        return byId;
+    }
 }

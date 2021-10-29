@@ -62,4 +62,13 @@ class UserControllerTest {
         userController.deleteUser(uuid);
         Mockito.verify(userService, atLeastOnce()).deleteUser(uuid);
     }
+
+    @Test
+    void shouldUpdateUserTest() {
+        user.setEmail("test@gmail.com");
+        user.setPassword("f");
+        Mockito.when(userService.updateUser(uuid,user)).thenReturn(user);
+
+        assertNotNull(userController.updateUser(uuid, user));
+    }
 }

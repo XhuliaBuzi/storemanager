@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,16 +46,13 @@ class InventoryServiceTest {
 
     @Test
     void shouldGetOneInventoryTest() {
-        Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(true);
-        Mockito.when(inventoryRepository.findById(uuid)).thenReturn(java.util.Optional.ofNullable(inventory));
+        Mockito.when(inventoryRepository.findById(uuid)).thenReturn(Optional.of(inventory));
 
         assertNotNull(inventoryService.getOneInventory(uuid));
     }
 
     @Test
     void shouldGetOneInventoryExceptionTest() {
-        Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(false);
-
         assertThrows(IllegalStateException.class,()-> inventoryService.getOneInventory(uuid));
     }
 
@@ -67,9 +65,21 @@ class InventoryServiceTest {
 
     @Test
     void shouldDeleteInventoryTest() {
-        Mockito.when(inventoryRepository.existsById(uuid)).thenReturn(true);
+        Mockito.when(inventoryRepository.findById(uuid)).thenReturn(Optional.of(inventory));
 
         inventoryService.deleteInventory(uuid);
         Mockito.verify(inventoryRepository,Mockito.atLeastOnce()).deleteById(uuid);
+    }
+
+    @Test
+    void shouldUpdateInventoryTest() {
+        Mockito.when(inventoryRepository.findById(uuid)).thenReturn(Optional.of(inventory));
+        Mockito.when(inventoryRepository.getById(uuid)).thenReturn(inventory);
+
+        inventory.setQuantity(1);
+        inventory.setPrice(1.1f);
+        Mockito.when(inventoryRepository.save(inventory)).thenReturn(inventory);
+
+        assertNotNull(inventoryService.updateInventory(uuid, inventory));
     }
 }

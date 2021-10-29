@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,12 +25,11 @@ public class StoreService {
     }
 
     public Optional<Store> getOneStore(UUID id) {
-        exists(id);
-        return storeRepository.findById(id);
+        return exists(id);
     }
 
     public Store addNewStore(Store store) {
-        Optional<Store> userById = storeRepository.findByName(store.getName());
+        var userById = storeRepository.findByName(store.getName());
         if (userById.isPresent()) throw new IllegalStateException("ID taken");
         return storeRepository.save(store);
     }
@@ -39,9 +39,25 @@ public class StoreService {
         storeRepository.deleteById(id);
     }
 
-    private void exists(UUID id) {
-        boolean existsById = storeRepository.existsById(id);
-        if (!existsById) throw new IllegalStateException("Store by ID : " + id + " does not exists.");
+    public Store updateStore(UUID idStore, Store forUpdateStore) {
+        exists(idStore);
+        var storeById = storeRepository.getById(idStore);
+        final var forUpdateName = forUpdateStore.getName();
+        final var forUpdateAddress = forUpdateStore.getAddress();
+        final var forUpdateContact = forUpdateStore.getContact();
+        if (areNotEqual(storeById.getName(), forUpdateName)) storeById.setName(forUpdateName);
+        if (areNotEqual(storeById.getAddress(), forUpdateAddress)) storeById.setAddress(forUpdateAddress);
+        if (areNotEqual(storeById.getContact(), forUpdateContact)) storeById.setContact(forUpdateContact);
+        return storeRepository.save(storeById);
     }
 
+    private <T> boolean areNotEqual(T first, T second) {
+        return second != null && !Objects.equals(first, second);
+    }
+
+    private Optional<Store> exists(UUID id) {
+        var byId = storeRepository.findById(id);
+        if (byId.isEmpty()) throw new IllegalStateException("Store by ID : " + id + " does not exists.");
+        return byId;
+    }
 }

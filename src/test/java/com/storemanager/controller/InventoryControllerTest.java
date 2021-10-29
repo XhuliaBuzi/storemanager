@@ -60,4 +60,13 @@ class InventoryControllerTest {
         inventoryController.deleteInventory(uuid);
         Mockito.verify(inventoryService, Mockito.atLeastOnce()).deleteInventory(uuid);
     }
+
+    @Test
+    void shouldUpdateInventoryTest() {
+        inventory.setQuantity(1);
+        inventory.setPrice(1.1f);
+        Mockito.when(inventoryService.updateInventory(uuid,inventory)).thenReturn(inventory);
+
+        assertNotNull(inventoryController.updateInventory(uuid, inventory));
+    }
 }

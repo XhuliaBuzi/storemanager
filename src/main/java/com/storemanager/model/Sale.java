@@ -23,10 +23,10 @@ public class Sale {
     private UUID id;
     private Integer quantity;
     private Float total;
-    //Another home work that you left me it was to create auto data/time here you have it. Also i have done changes in the database plase update that.
-    private LocalDate date=LocalDate.now();
-    private LocalTime time=LocalTime.now();
+    private LocalDate date = LocalDate.now();
+    private LocalTime time = LocalTime.now();
     @ManyToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
+
 }

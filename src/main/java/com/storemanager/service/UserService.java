@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,33 +30,32 @@ public class UserService {
     }
 
     public User addNewUser(User user) {
-        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
+        var userByEmail = userRepository.findByEmail(user.getEmail());
         if (userByEmail.isPresent()) throw new IllegalStateException("Email taken.");
         return userRepository.save(user);
     }
 
     public void deleteUser(UUID id) {
-        userRepository.delete(exists(id).get());
+        exists(id);
+        userRepository.deleteById(id);
     }
 
-    // So first it wasn't working with http://localhost:8080/user/{{userId}} in postmen
-    // and what i did it was           http://localhost:8080/user/f1bc325c-0fe3-490c-b6a3-2aa15baac189 and it works.
-    //if you apruve my code than i will do this for the others.
-    @Transactional
-    public void updateUser(UUID userID, User userForUpdate) {
-        String email = userForUpdate.getEmail();
-        String password = userForUpdate.getPassword();
-        User user = exists(userID).get();
-        if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
-            user.setEmail(email);
-        }
-        if (password != null && password.length() > 0 && !Objects.equals(user.getEmail(), password)) {
-            user.setPassword(password);
-        }
+    public User updateUser(UUID userID, User userForUpdate) {
+        exists(userID);
+        var userById = userRepository.getById(userID);
+        final var forUpdateEmail = userForUpdate.getEmail();
+        final var forUpdatePassword = userForUpdate.getPassword();
+        if (areNotEqual(userById.getEmail(), forUpdateEmail)) userById.setEmail(forUpdateEmail);
+        if (areNotEqual(userById.getPassword(), forUpdatePassword)) userById.setPassword(forUpdatePassword);
+        return userRepository.save(userById);
+    }
+
+    private <T> boolean areNotEqual(T first, T second) {
+        return second != null && !Objects.equals(first, second);
     }
 
     private Optional<User> exists(UUID id) {
-        Optional<User> userByID = userRepository.findById(id);
+        var userByID = userRepository.findById(id);
         if (userByID.isEmpty()) throw new IllegalStateException("User by Email : " + id + " does not exists.");
         return userByID;
     }

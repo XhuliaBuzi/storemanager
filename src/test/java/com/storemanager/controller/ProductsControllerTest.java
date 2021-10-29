@@ -61,4 +61,13 @@ class ProductsControllerTest {
         productsController.deleteProduct(uuid);
         Mockito.verify(productsService, Mockito.atLeastOnce()).deleteProducts(uuid);
     }
+
+    @Test
+    void shouldUpdateProductsTest() {
+        products.setName("test");
+        products.setDescription("It is a test");
+        Mockito.when(productsService.updateProducts(uuid,products)).thenReturn(products);
+
+        assertNotNull(productsController.updateProducts(uuid, products));
+    }
 }

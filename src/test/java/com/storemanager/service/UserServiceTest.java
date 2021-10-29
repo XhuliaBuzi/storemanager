@@ -25,7 +25,7 @@ class UserServiceTest {
     private UUID uuid;
     private User user;
     @Mock
-    private UserRepository userRepository; // this guy is just pretending to know what to do .. but he doesnt
+    private UserRepository userRepository;
 
     @BeforeEach
     public void init() {
@@ -45,7 +45,6 @@ class UserServiceTest {
 
     @Test
     void shouldReturnOneUserTest() {
-        Mockito.when(userRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user));
 
         assertNotNull(userService.getOneUser(uuid));
@@ -53,8 +52,6 @@ class UserServiceTest {
 
     @Test
     void shouldReturnOneUserExceptionTest() {
-        Mockito.when(userRepository.existsById(uuid)).thenReturn(false);
-
         assertThrows(IllegalStateException.class, () -> userService.getOneUser(uuid));
     }
 
@@ -66,7 +63,7 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldAddNewUserExceptionTest() { // negative test
+    void shouldAddNewUserExceptionTest() {
         Mockito.when(userRepository.findByEmail("")).thenReturn(Optional.of(user));
 
         assertThrows(IllegalStateException.class, () -> userService.addNewUser(user));
@@ -74,10 +71,22 @@ class UserServiceTest {
 
     @Test
     void shouldDeleteUserTest() {
-        Mockito.when(userRepository.existsById(uuid)).thenReturn(true);
+        Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user));
 
         userService.deleteUser(uuid);
         Mockito.verify(userRepository, atLeastOnce()).deleteById(uuid);
+    }
+
+    @Test
+    void shouldUpdateUserTest() {
+        Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.getById(uuid)).thenReturn(user);
+
+        user.setEmail("test@gmail.com");
+        user.setPassword("f");
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+
+        assertNotNull(userService.updateUser(uuid, user));
     }
 
 }

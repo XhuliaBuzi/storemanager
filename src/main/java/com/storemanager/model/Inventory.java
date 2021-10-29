@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Inventory {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -29,5 +30,5 @@ public class Inventory {
     @JoinColumn(name = "store_id")
     private Store store;
     @OneToMany(mappedBy = "inventory")
-    public List<Sale> sale;
+    private List<Sale> sale;
 }

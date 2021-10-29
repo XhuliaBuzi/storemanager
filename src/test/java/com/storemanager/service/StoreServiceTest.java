@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -46,7 +47,6 @@ class StoreServiceTest {
 
     @Test
     void shouldReturnOneStoreTest() {
-        Mockito.when(storeRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(storeRepository.findById(uuid)).thenReturn(java.util.Optional.of(store));
 
         assertNotNull(storeService.getOneStore(uuid));
@@ -54,8 +54,6 @@ class StoreServiceTest {
 
     @Test
     void shouldReturnOneStoreExceptionTest() {
-        Mockito.when(storeRepository.existsById(uuid)).thenReturn(false);
-
         assertThrows(IllegalStateException.class, () -> storeService.getOneStore(uuid));
     }
 
@@ -75,9 +73,21 @@ class StoreServiceTest {
 
     @Test
     void shouldDeleteStoreTest() {
-        Mockito.when(storeRepository.existsById(uuid)).thenReturn(true);
+        Mockito.when(storeRepository.findById(uuid)).thenReturn(java.util.Optional.of(store));
 
         storeService.deleteStore(uuid);
         Mockito.verify(storeRepository, Mockito.atLeastOnce()).deleteById(uuid);
+    }
+
+    @Test
+    void shouldUpdateStoreTest() {
+        Mockito.when(storeRepository.findById(uuid)).thenReturn(Optional.of(store));
+        Mockito.when(storeRepository.getById(uuid)).thenReturn(store);
+        store.setName("Anisa");
+        store.setAddress("Tirane, Albania");
+        store.setContact("069*******");
+        Mockito.when(storeRepository.save(store)).thenReturn(store);
+
+        assertNotNull(storeService.updateStore(uuid, store));
     }
 }

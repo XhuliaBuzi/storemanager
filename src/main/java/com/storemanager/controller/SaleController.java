@@ -5,7 +5,6 @@ import com.storemanager.service.SaleService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,5 +35,10 @@ public class SaleController {
     @DeleteMapping(path = "/{id}")
     public void deleteSale(@PathVariable("id") UUID id) {
         saleService.deleteSale(id);
+    }
+
+    @PatchMapping(path = "/{idSale}")
+    public Sale updateSale(@PathVariable("idSale") UUID idSale, @RequestBody Sale sale) {
+        return saleService.updateSale(idSale, sale);
     }
 }

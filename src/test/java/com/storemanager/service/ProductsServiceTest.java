@@ -42,7 +42,6 @@ class ProductsServiceTest {
 
     @Test
     void shouldGetOneProductTest() {
-        Mockito.when(productsRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(productsRepository.findById(uuid)).thenReturn(Optional.of(products));
 
         assertNotNull(productsService.getOneProduct(uuid));
@@ -50,8 +49,6 @@ class ProductsServiceTest {
 
     @Test
     void shouldGetOneProductExceptionTest() {
-        Mockito.when(productsRepository.existsById(uuid)).thenReturn(false);
-
         assertThrows(IllegalStateException.class,()->productsService.getOneProduct(uuid));
     }
 
@@ -71,9 +68,21 @@ class ProductsServiceTest {
 
     @Test
     void deleteProducts() {
-        Mockito.when(productsRepository.existsById(uuid)).thenReturn(true);
+        Mockito.when(productsRepository.findById(uuid)).thenReturn(Optional.of(products));
 
         productsService.deleteProducts(uuid);
         Mockito.verify(productsRepository,Mockito.atLeastOnce()).deleteById(uuid);
+    }
+
+    @Test
+    void shouldUpdateProductsTest() {
+        Mockito.when(productsRepository.findById(uuid)).thenReturn(Optional.of(products));
+        Mockito.when(productsRepository.getById(uuid)).thenReturn(products);
+
+        products.setName("test");
+        products.setDescription("It is a test");
+        Mockito.when(productsRepository.save(products)).thenReturn(products);
+
+        assertNotNull(productsService.updateProducts(uuid, products));
     }
 }

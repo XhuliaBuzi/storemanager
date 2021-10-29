@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Optional;
@@ -64,5 +65,13 @@ class SaleControllerTest {
     void deleteSaleTest() {
         saleController.deleteSale(uuid);
         Mockito.verify(saleService, Mockito.atLeastOnce()).deleteSale(uuid);
+    }
+    @Test
+    void shouldUpdateSaleTest() {
+        sale.setQuantity(3);
+        sale.setTotal(3.34f);
+        Mockito.when(saleService.updateSale(uuid,sale)).thenReturn(sale);
+
+        assertNotNull(saleService.updateSale(uuid, sale));
     }
 }

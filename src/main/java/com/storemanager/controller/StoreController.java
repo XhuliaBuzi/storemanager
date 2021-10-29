@@ -32,6 +32,11 @@ public class StoreController {
         return storeService.addNewStore(store);
     }
 
+    @PatchMapping(path="/{idStore}")
+    public Store updateStore(@PathVariable("idStore") UUID idStore, @RequestBody Store store) {
+        return storeService.updateStore(idStore,store);
+    }
+
     @DeleteMapping(path = "/{id}")
     public void deleteStore(@PathVariable("id") UUID id) {
         storeService.deleteStore(id);

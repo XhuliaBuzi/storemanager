@@ -61,4 +61,14 @@ class StoreControllerTest {
         storeController.deleteStore(uuid);
         Mockito.verify(storeService, Mockito.atLeastOnce()).deleteStore(uuid);
     }
+
+    @Test
+    void shouldUpdateUserTest() {
+        store.setName("test");
+        store.setAddress("test, test");
+        store.setContact("069*******");
+        Mockito.when(storeService.updateStore(uuid, store)).thenReturn(store);
+
+        assertNotNull(storeController.updateStore(uuid, store));
+    }
 }

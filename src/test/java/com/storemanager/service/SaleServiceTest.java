@@ -48,7 +48,6 @@ class SaleServiceTest {
 
     @Test
     void shouldGetOneSaleTest() {
-        Mockito.when(saleRepository.existsById(uuid)).thenReturn(true);
         Mockito.when(saleRepository.findById(uuid)).thenReturn(java.util.Optional.of(sale));
 
         assertNotNull(saleService.getOneSale(uuid));
@@ -56,8 +55,6 @@ class SaleServiceTest {
 
     @Test
     void shouldGetOneSaleExceptionTest() {
-        Mockito.when(saleRepository.existsById(uuid)).thenReturn(false);
-
         assertThrows(IllegalStateException.class, () -> saleService.getOneSale(uuid));
     }
 
@@ -69,17 +66,21 @@ class SaleServiceTest {
     }
 
     @Test
-    void shouldAddSaleExceptionTest() {
-        Mockito.when(saleRepository.findById(sale.getId())).thenReturn(Optional.of(sale));
-
-        assertThrows(IllegalStateException.class, () -> saleService.addSale(sale));
-    }
-
-    @Test
     void deleteSale() {
-        Mockito.when(saleRepository.existsById(uuid)).thenReturn(true);
+        Mockito.when(saleRepository.findById(uuid)).thenReturn(Optional.of(sale));
 
         saleService.deleteSale(uuid);
         Mockito.verify(saleRepository, Mockito.atLeastOnce()).deleteById(uuid);
+    }
+
+    @Test
+    void shouldUpdateSaleTest() {
+        Mockito.when(saleRepository.findById(uuid)).thenReturn(Optional.of(sale));
+        Mockito.when(saleRepository.getById(uuid)).thenReturn(sale);
+        sale.setQuantity(3);
+        sale.setTotal(3.34f);
+        Mockito.when(saleRepository.save(sale)).thenReturn(sale);
+
+        assertNotNull(saleService.updateSale(uuid, sale));
     }
 }

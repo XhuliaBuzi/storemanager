@@ -36,4 +36,9 @@ public class InventoryController {
     public void deleteInventory(@PathVariable("id") UUID id) {
         inventoryService.deleteInventory(id);
     }
+
+    @PatchMapping(path = "/{idInventory}")
+    public Inventory updateInventory(@PathVariable("idInventory")UUID idInventory,@RequestBody Inventory inventory){
+        return inventoryService.updateInventory(idInventory,inventory);
+    }
 }

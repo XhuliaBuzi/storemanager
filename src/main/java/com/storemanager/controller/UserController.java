@@ -32,11 +32,11 @@ public class UserController {
         return userService.addNewUser(user);
     }
 
-    @PatchMapping(path = "{userID}")
-    public void updateUser(
+    @PatchMapping(path = "/{userID}")
+    public User updateUser(
             @PathVariable("userID") UUID userID,
             @RequestBody User user) {
-        userService.updateUser(userID, user);
+        return userService.updateUser(userID, user);
     }
 
 
